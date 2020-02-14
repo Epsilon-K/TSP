@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>map of khartoum.png</file>
+        <file>map of khartoum i.png</file>
+        <file>map pin.png</file>
+        <file>map pin locked.png</file>
+    </qresource>
+</RCC>
