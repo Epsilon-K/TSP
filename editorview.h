@@ -13,6 +13,7 @@
 #include <QGraphicsPixmapItem>
 #include <mappin.h>
 #include <pathitem.h>
+#include <QGLWidget>
 
 
 class EditorView : public QGraphicsView
@@ -21,7 +22,7 @@ class EditorView : public QGraphicsView
 public:
     EditorView(QWidget*& p);
 
-    QVector<QGraphicsScene *> scenes;   // replace with a custome scene data type
+    QVector<QGraphicsScene *> scenes;
     QColor bgColor, gridColor, resoultionColor;
     QSize gridSize, gameResolution;
     QRectF sceneSize;
@@ -35,12 +36,12 @@ public:
     QGraphicsPixmapItem * pixmapBG;
     qreal gridOpacity = 0.3;
 
-
     // Functions
 
     void updateScale();
     void drawGrid();
     void setGridVisibility();
+    void toggleOpenGL(bool checked);
 
 signals:
     void clicked();

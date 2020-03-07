@@ -11,7 +11,9 @@ TSP::TSP(QWidget *parent) :
     showMaximized();
     connect(ui->view, SIGNAL(signalMouseMoveEvent(QPoint)), this, SLOT(mouseMoved(QPoint)));
 
+    // CHANGE THIS ----------------------------------------------
     mapPinNormal = new QPixmap(":/map pin.png");
+    //mapPinNormal = new QPixmap(":/GE Actor in editor.png");
     mapPinLocked =  new QPixmap(":/map pin locked.png");
 
     gaColor = QColor(90, 250, 110);
@@ -150,7 +152,7 @@ void TSP::on_pushButton_clicked()
     bool checked = ui->checkBox->isChecked();
     MapPin *pin = new MapPin(checked ? mapPinLocked : mapPinNormal, pins.size()+1);
     ui->view->scene()->addItem(pin);
-    pin->setPos(0,0);
+    //pin->setPos(0,0);     // this is set randomly
     pin->centerLabel();
     pin->setFlag(QGraphicsItem::ItemIsMovable, !checked);
     pin->setFlag(QGraphicsItem::ItemIsSelectable, !checked);
@@ -282,6 +284,11 @@ void TSP::on_lineEdit_textChanged(const QString &arg1)
     customPath = Path(p);
     customPath.length = calcDistance(getLines(customPath));
 
-    customPathItem.Replace(getLines(customPath), 0.6, customColor, ui->view->scene(), 2);
+    customPathItem.Replace(getLines(customPath), 0.6, customColor, ui->view->scene(), 4);
     ui->label_2->setText("Custom Path Length : " + QString::number(customPath.length));
+}
+
+void TSP::on_checkBox_2_toggled(bool checked)
+{
+    ui->view->toggleOpenGL(checked);
 }

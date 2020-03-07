@@ -13,7 +13,7 @@ void PathItem::Replace(QVector<QLineF> vl, qreal opacity, QColor clr, QGraphicsS
         QPen pen;
         pen.setBrush(clr);
         pen.setCapStyle(Qt::SquareCap);
-        pen.setStyle(Qt::DotLine);
+        pen.setStyle(penWidth != 2 ? Qt::DotLine : Qt::DashLine);
         pen.setWidth(penWidth);
         l->setPen(pen);
         l->setOpacity(opacity);

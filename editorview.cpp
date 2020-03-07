@@ -12,6 +12,7 @@ EditorView::EditorView(QWidget *&p)
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     QGraphicsScene *scn = new QGraphicsScene(this);
+    scn->setItemIndexMethod(scn->NoIndex);
 
     // map
     mapBG = new QPixmap(":/map of khartoum.png");
@@ -125,6 +126,11 @@ void EditorView::setGridVisibility()
     for(int i = 0; i < gridLines.size(); i++){
         gridLines[i]->setVisible(gridsVisible);
     }
+}
+
+void EditorView::toggleOpenGL(bool checked)
+{
+    setViewport(checked ? new QGLWidget(QGLFormat(QGL::SampleBuffers)) : new QWidget);
 }
 
 void EditorView::centering()

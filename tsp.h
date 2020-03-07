@@ -60,6 +60,8 @@ private slots:
 
     void on_lineEdit_textChanged(const QString &arg1);
 
+    void on_checkBox_2_toggled(bool checked);
+
 private:
     Ui::TSP *ui;
     QVector<MapPin*> pins;

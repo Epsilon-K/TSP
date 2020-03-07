@@ -7,6 +7,9 @@
 #include "utils.h"
 #include <QVariant>
 #include <QGraphicsDropShadowEffect>
+#include <QGraphicsSceneHoverEvent>
+#include <QCursor>
+#include <QTimeLine>
 
 class MapPin : public QObject, public QGraphicsPixmapItem
 {
@@ -41,15 +44,36 @@ public:
     QPoint origin;
     QString name;
 
-protected:
-    QVariant itemChange(GraphicsItemChange change, const QVariant &value)
-    {
-        if (change == ItemPositionHasChanged){
-            label->setPlainText(name + "   " + pointToString(pos()));
-            centerLabel();
-        }
-        return QGraphicsItem::itemChange(change, value);
+    QTimeLine * tl1;
+    QTimeLine * tl2;
+
+public slots:
+    void setScaleAnimation(int s){
+        qreal ns = qreal(s)/100;
+        setScale(ns);
+        if(ns <= 1)
+        setOpacity(ns);
     }
+
+    void deleteTimeLine(){
+        delete tl1;
+        tl2 = new QTimeLine(100, this);
+        tl2->setFrameRange(120, 100);
+        tl2->setUpdateInterval(16);
+        tl2->setCurveShape(QTimeLine::EaseOutCurve);
+        connect(tl2, SIGNAL(frameChanged(int)), this, SLOT(setScaleAnimation(int)));
+        connect(tl2, SIGNAL(finished()), this, SLOT(deleteTimeLine2()));
+        tl2->start();
+    }
+
+    void deleteTimeLine2(){
+        delete tl2;
+    }
+
+protected:
+    QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 };
 
 #endif // MAPPIN_H
